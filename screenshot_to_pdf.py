@@ -9,8 +9,8 @@ import os
 
 # URLs to visit
 webpages = [
-    "https://example.com",
-    "https://www.wikipedia.org",
+    "https://www.google.com",
+    "https://www.youtube.com",
     "https://www.python.org"
 ]
 
