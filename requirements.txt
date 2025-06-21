@@ -1,4 +1,6 @@
 selenium
 webdriver-manager
-Pillow
 fpdf
+Pillow
+pytest
+pytest-html
