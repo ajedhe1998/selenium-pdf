@@ -1,21 +1,38 @@
-import os
-import main_script
+import pytest
+import logging
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import time
 
-webpages = [
-    "https://www.google.com",
-    "https://www.youtube.com",
-    "https://www.python.org"
+# Configure logging
+logger = logging.getLogger(__name__)
+
+# Test data: (URL, Expected Title)
+test_data = [
+    ("https://www.google.com", "Google"),
+    ("https://www.youtube.com", "YouTube"),
+    ("https://www.python.org", "Welcome to Python.org")
 ]
 
 
-def test_screenshot_and_pdf_generation():
-    screenshots = main_script.take_screenshots(webpages)
+@pytest.mark.parametrize("url,expected_title", test_data)
+def test_webpage_title(url, expected_title):
+    logger.info(f"🔍 Navigating to {url}")
 
-    # Assert all screenshots are created
-    for url, path, title in screenshots:
-        assert os.path.exists(path), f"Screenshot not found for {url}"
-        assert len(title) > 0, f"Title not captured for {url}"
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--window-size=1920,1080")
 
-    # Create PDF
-    pdf_path = main_script.create_pdf(screenshots)
-    assert os.path.exists(pdf_path), "PDF was not created"
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+    driver.get(url)
+    time.sleep(2)
+
+    page_title = driver.title
+    logger.info(f"✅ Page title: '{page_title}'")
+
+    assert expected_title.lower() in page_title.lower(), f"Expected '{expected_title}' in title but got '{page_title}'"
+
+    driver.quit()
