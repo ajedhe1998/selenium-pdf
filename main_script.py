@@ -13,6 +13,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from fpdf import FPDF
 from PIL import Image
 from dotenv import load_dotenv
+import os
+
+# Load .env explicitly from the script's directory
+env_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path=env_path)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, filename='test_log.log', filemode='w',
@@ -20,7 +25,7 @@ logging.basicConfig(level=logging.INFO, filename='test_log.log', filemode='w',
 logger = logging.getLogger(__name__)
 
 # Load environment variables
-load_dotenv()
+print(f"Loaded job name: {os.getenv('JOB_NAME')}")
 jenkins_url = os.getenv("JENKINS_URL")
 jenkins_user = os.getenv("JENKINS_USER")
 jenkins_token = os.getenv("JENKINS_TOKEN")
