@@ -29,6 +29,8 @@ job_name = os.getenv("JOB_NAME")
 
 # Trigger Jenkins Job
 def trigger_jenkins_job():
+    if job_name == os.getenv("CURRENT_JOB_NAME"):
+        raise Exception("Loop detected: Trying to trigger self job!")
     logger.info(f"🚀 Triggering Jenkins job: {jenkins_url}/job/{job_name}/build")
     trigger_url = f"{jenkins_url}/job/{job_name}/build/api/json"
     auth = (jenkins_user, jenkins_token)
