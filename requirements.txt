@@ -1,6 +1,9 @@
-selenium
-webdriver-manager
-fpdf
-Pillow
-pytest
+selenium~=4.33.0
+webdriver-manager~=4.0.2
+fpdf~=1.7.2
+Pillow~=11.2.1
+pytest~=8.4.1
 pytest-html
+requests~=2.32.3
+dotenv~=0.9.9
+python-dotenv~=1.1.0
